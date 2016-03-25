@@ -62,31 +62,105 @@ describe("Optional test: ", () => {
         });
 
         it("Optional.prototype.get", () => {
-            
+            let maybe = Optional.ofNullable(3);
+            assert.equal(3, maybe.get());
+
+            maybe = Optional.of(3);
+            assert.equal(3, maybe.get());
+
+            maybe = Optional.empty();
+            try {
+                maybe.get()
+            }
+            catch (error) {
+                assert.equal("optional in empty, can not use get()", error.message);
+            }
         });
 
         it("Optional.prototype.orElse", () => {
+            let maybe = Optional.of(3);
+            assert.equal(3, maybe.orElse(4));
 
+            maybe = Optional.empty();
+            assert.equal(4, maybe.orElse(4));
+
+            maybe = Optional.ofNullable(null);
+            assert.equal(5, maybe.orElse(5));
+
+            maybe = Optional.ofNullable(6);
+            assert.equal(6, maybe.orElse(7));
         });
 
         it("Optional.prototype.orElseGet", () => {
+            let maybe = Optional.of(3);
+            assert.equal(3, maybe.orElseGet(_ => 4));
 
+            maybe = Optional.empty();
+            assert.equal(4, maybe.orElseGet(_ => 4));
+
+            maybe = Optional.ofNullable(null);
+            assert.equal(5, maybe.orElseGet(_ => 5));
+
+            maybe = Optional.ofNullable(6);
+            assert.equal(6, maybe.orElseGet(_ => 7));
         });
 
         it("Optional.prototype.orElseThrow", () => {
+            let maybe = Optional.of(3);
+            assert.equal(3, maybe.orElseThrow(_ => new Error("")));
 
+            maybe = Optional.empty();
+            try {
+                maybe.orElseThrow(_ => new Error("non value"));
+            }
+            catch (error) {
+                assert.equal("non value", error.message);
+            }
+
+
+            maybe = Optional.ofNullable(null);
+            try {
+                maybe.orElseThrow(_ => new Error("non value"));
+            }
+            catch (error) {
+                assert.equal("non value", error.message);
+            }
+
+            maybe = Optional.ofNullable(4);
+            assert.equal(4, maybe.orElseThrow(_ => new Error("non value")));
         });
 
         it("Optional.prototype.map", () => {
+            let maybe = Optional.of(3);
+            assert.equal(6, maybe.map(value => value * 2).__value);
 
+            maybe = Optional.empty();
+            assert.equal(null, maybe.map(_ => _).__value);
+            assert.notEqual(maybe, maybe.map(_ => _));
         });
 
         it("Optional.prototype.flatMap", () => {
+            let maybe = Optional.of(3);
+            assert.equal(6, maybe.flatMap(value => value * 2));
 
+            maybe = Optional.empty();
+            assert.equal(null, maybe.flatMap(_ => _).__value);
+            assert.notEqual(maybe, maybe.flatMap(_ => _));
         });
 
         it("Optional.prototype.filter", () => {
+            let maybe = Optional.of(3);
+            assert.equal(3, maybe.filter(_ => _ === 3).__value);
+            assert.equal(null, maybe.filter(_ => _ === 4).__value);
 
+            maybe = Optional.empty();
+            assert.equal(maybe, maybe.filter(_ => _ === 5));
         });
+    });
+});
+
+describe("Example: ", () => {
+    it("complex use case", () => {
+        
     });
 });

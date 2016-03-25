@@ -30,7 +30,7 @@ Optional.prototype.ifPresent = function (fn) {
 };
 
 Optional.prototype.get = function () {
-    if (!this.isPresent()) throw new TypeError("optional in empty");
+    if (!this.isPresent()) throw new TypeError("optional in empty, can not use get()");
     return this.__value;
 };
 
@@ -48,12 +48,12 @@ Optional.prototype.orElseThrow = function (fn) {
 };
 
 Optional.prototype.map = function (fn) {
-    if (!this.isPresent()) return this;
+    if (!this.isPresent()) return Optional.empty();
     else return Optional.ofNullable(fn(this.__value));
 };
 
 Optional.prototype.flatMap = function (fn) {
-    if (!this.isPresent()) return this;
+    if (!this.isPresent()) return Optional.empty();
     else return fn(this.__value);
 };
 
