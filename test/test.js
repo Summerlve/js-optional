@@ -161,6 +161,7 @@ describe("Optional test: ", () => {
 
 describe("Example: ", () => {
     it("complex use case", () => {
-        
+        let version = Optional.ofNullable("3.0.0").orElse("defalut");
+        assert.equal("3.0.0", version);
     });
 });
