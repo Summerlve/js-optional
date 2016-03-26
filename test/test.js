@@ -163,5 +163,18 @@ describe("Example: ", () => {
     it("complex use case", () => {
         let version = Optional.ofNullable("3.0.0").orElse("defalut");
         assert.equal("3.0.0", version);
+
+        version = Optional.ofNullable({version: "3.0.0"})
+                            .flatMap(value => Optional.ofNullable(value.version))
+                            .map(_ => _)
+                            .orElse("UNKNOWN");
+
+        assert.equal("3.0.0", version);
+
+        let isUSB3 = Optional.ofNullable("2.0")
+                            .filter(_ => _ === "3.0")
+                            .isPresent();
+
+        assert.equal(false, isUSB3);
     });
 });
