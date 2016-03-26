@@ -23,6 +23,4 @@ version = Optional.ofNullable({version: "3.0.0"})
 let isUSB3 = Optional.ofNullable("2.0")
                     .filter(_ => _ === "3.0")
                     .isPresent();
-
-assert.equal(false, isUSB3);
 ```
