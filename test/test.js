@@ -136,7 +136,7 @@ describe("Optional test: ", () => {
 
             maybe = Optional.empty();
             assert.equal(null, maybe.map(_ => _).__value);
-            assert.notEqual(maybe, maybe.map(_ => _));
+            assert.equal(null, maybe.map(_ => _).__value);
         });
 
         it("Optional.prototype.flatMap", () => {
@@ -145,7 +145,7 @@ describe("Optional test: ", () => {
 
             maybe = Optional.empty();
             assert.equal(null, maybe.flatMap(_ => _).__value);
-            assert.notEqual(maybe, maybe.flatMap(_ => _));
+            assert.equal(null, maybe.flatMap(_ => _).__value);
         });
 
         it("Optional.prototype.filter", () => {

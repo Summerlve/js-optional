@@ -4,6 +4,9 @@ function Optional (value) {
     this.__value = value;
 }
 
+// singleton
+Optional.EMPTY = new Optional(null);
+
 // factory method
 Optional.of = function (value) {
     if (value == null) throw new TypeError("Optional.of's argument can not be null");
@@ -17,7 +20,7 @@ Optional.ofNullable = function (value) {
 };
 
 Optional.empty = function () {
-    return new Optional(null);
+    return Optional.EMPTY;
 };
 
 // instance method
@@ -61,5 +64,7 @@ Optional.prototype.filter = function (fn) {
     if (!this.isPresent()) return this;
     else return fn(this.__value) ? this : Optional.empty();
 };
+
+Object.freeze(Optional);
 
 module.exports = Optional;
