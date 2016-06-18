@@ -1,6 +1,6 @@
 "use strict";
 const assert = require("assert");
-const Optional = require("../index.js");
+const Optional = require("../../build/index.js");
 
 describe("Optional test: ", () => {
     describe("create Optional instance:", () => {
