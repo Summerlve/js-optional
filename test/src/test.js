@@ -1,6 +1,6 @@
 "use strict";
-const assert = require("assert");
-const Optional = require("../../build/index.js");
+import assert from "assert";
+import Optional from "../../build/index.es6.js";
 
 describe("Optional test: ", () => {
     describe("create Optional instance:", () => {
