@@ -1,6 +1,6 @@
 "use strict";
 import assert from "assert";
-import Optional from "../../build/index.es6.js";
+import Optional from "../../build/index.js";
 
 describe("Optional test: ", () => {
     describe("create Optional instance:", () => {

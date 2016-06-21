@@ -1,6 +1,6 @@
 {
   "name": "js-optional",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "like java 8 Optional",
   "main": "./build/index.js",
   "scripts": {

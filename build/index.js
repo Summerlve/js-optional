@@ -1,66 +1,97 @@
 "use strict";
 
-function Optional(value) {
-    this.__value = value;
-}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-// singleton
-Optional.EMPTY = new Optional(null);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-// factory method
-Optional.of = function (value) {
-    if (value == null) throw new TypeError("Optional.of's argument can not be null");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    return new Optional(value);
-};
+var Optional = function () {
+    function Optional(value) {
+        _classCallCheck(this, Optional);
 
-Optional.ofNullable = function (value) {
-    if (value == null) return Optional.empty(value);else return Optional.of(value);
-};
+        this.__value = value;
+    }
 
-Optional.empty = function () {
-    return Optional.EMPTY;
-};
+    _createClass(Optional, [{
+        key: "isPresent",
+        value: function isPresent() {
+            return this.__value != null;
+        }
+    }, {
+        key: "ifPresent",
+        value: function ifPresent(fn) {
+            if (this.isPresent()) fn();
+        }
+    }, {
+        key: "get",
+        value: function get() {
+            if (!this.isPresent()) throw new TypeError("optional in empty, can not use get()");
+            return this.__value;
+        }
+    }, {
+        key: "orElse",
+        value: function orElse(other) {
+            return this.isPresent() ? this.__value : other;
+        }
+    }, {
+        key: "orElseGet",
+        value: function orElseGet(fn) {
+            return this.isPresent() ? this.__value : fn();
+        }
+    }, {
+        key: "orElseThrow",
+        value: function orElseThrow(fn) {
+            if (!this.isPresent()) throw fn();
+            return this.__value;
+        }
+    }, {
+        key: "map",
+        value: function map(fn) {
+            if (!this.isPresent()) return Optional.empty();else return Optional.ofNullable(fn(this.__value));
+        }
+    }, {
+        key: "flatMap",
+        value: function flatMap(fn) {
+            if (!this.isPresent()) return Optional.empty();else return fn(this.__value);
+        }
+    }, {
+        key: "filter",
+        value: function filter(fn) {
+            if (!this.isPresent()) return this;else return fn(this.__value) ? this : Optional.empty();
+        }
+    }], [{
+        key: "of",
+        value: function of(value) {
+            if (value == null) throw new TypeError("Optional.of's argument can not be null");
+            return new Optional(value);
+        }
+    }, {
+        key: "ofNullable",
+        value: function ofNullable(value) {
+            if (value == null) return Optional.empty(value);else return Optional.of(value);
+        }
+    }, {
+        key: "empty",
+        value: function empty() {
+            return Optional.EMPTY;
+        }
+    }, {
+        key: "EMPTY",
+        get: function get() {
+            if (this.__emptyInit) {
+                this.__emptyInit = false;
+                return new Optional(null);
+            } else {
+                this.__emptyInit = true;
+                return this.EMPTY;
+            }
+        }
+    }]);
 
-// instance method
-Optional.prototype.isPresent = function () {
-    return this.__value != null;
-};
+    return Optional;
+}();
 
-Optional.prototype.ifPresent = function (fn) {
-    if (this.isPresent()) fn();
-};
-
-Optional.prototype.get = function () {
-    if (!this.isPresent()) throw new TypeError("optional in empty, can not use get()");
-    return this.__value;
-};
-
-Optional.prototype.orElse = function (other) {
-    return this.isPresent() ? this.__value : other;
-};
-
-Optional.prototype.orElseGet = function (fn) {
-    return this.isPresent() ? this.__value : fn();
-};
-
-Optional.prototype.orElseThrow = function (fn) {
-    if (!this.isPresent()) throw fn();
-    return this.__value;
-};
-
-Optional.prototype.map = function (fn) {
-    if (!this.isPresent()) return Optional.empty();else return Optional.ofNullable(fn(this.__value));
-};
-
-Optional.prototype.flatMap = function (fn) {
-    if (!this.isPresent()) return Optional.empty();else return fn(this.__value);
-};
-
-Optional.prototype.filter = function (fn) {
-    if (!this.isPresent()) return this;else return fn(this.__value) ? this : Optional.empty();
-};
-
-Object.freeze(Optional);
-
-module.exports = Optional;
+exports.default = Optional;
